@@ -19,6 +19,7 @@
         android:id="@+id/Gallery"
         android:layout_width="wrap_content"
         android:layout_height="69dp"
+        android:onClick="showGallery"
         android:text="Gallery" />
 
     <Button
