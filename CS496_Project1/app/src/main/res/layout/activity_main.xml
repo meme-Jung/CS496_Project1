@@ -12,7 +12,8 @@
         android:id="@+id/phonebook"
         android:layout_width="wrap_content"
         android:layout_height="69dp"
-        android:text="phonebook" />
+        android:text="phonebook"
+        android:onClick="showAddress"/>
 
     <Button
         android:id="@+id/Gallery"
