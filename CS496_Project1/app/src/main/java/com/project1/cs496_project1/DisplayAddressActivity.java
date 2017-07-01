@@ -37,7 +37,6 @@ public class DisplayAddressActivity extends AppCompatActivity {
             //After this point you wait for callback in onRequestPermissionsResult(int, String[], int[]) overriden method
         }
 
-
         ArrayAdapter<String> adapter = new ArrayAdapter(getApplicationContext(), R.layout.address_row, addContacts());
 
         ListView listview = (ListView) findViewById(R.id.listView1);

@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
     }
     /** Called when the user clicks the Send button */
     public void showAddress(View view) {
-
+        // insert abcbdufcoiasdcpiojjwedcowec
         Intent intent = new Intent(this, DisplayAddressActivity.class);
         startActivity(intent);
 
