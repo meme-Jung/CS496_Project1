@@ -76,38 +76,36 @@ public class CustomGalleryAdapter extends BaseAdapter {
         if (convertView == null) {
             // if it's not recycled, initialize some attributes
             imageView = new ImageView(mContext);
+            // Get memory class of this device, exceeding this amount will throw an
+            // OutOfMemory exception.
+            final int memClass = ((ActivityManager) mContext.getSystemService(
+                    Context.ACTIVITY_SERVICE)).getMemoryClass();
+
+            // Use 1/8th of the available memory for this memory cache.
+            final int cacheSize = 1024 * 1024 * memClass/4;
+
+ //           mMemoryCache = new LruCache(cacheSize)
+ //           String imageKey = mBasePath + File.separator + mImgList[position];
+ //           Bitmap bm = getBitmapFromMemCache(imageKey);
+
+ //           BitmapFactory.Options options = new BitmapFactory.Options();
+//            options.inSampleSize = 4;
+    //        if(bm == null)
+    //        {
+                bm = BitmapFactory.decodeFile(mBasePath + File.separator + mImgList[position]);
+                Bitmap mThumbnail = ThumbnailUtils.extractThumbnail(bm, 500, 550);
+                imageView.setPadding(8, 8, 8, 8);
+                imageView.setRotation(90);
+                imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                imageView.setLayoutParams(new GridView.LayoutParams(GridView.LayoutParams.MATCH_PARENT, GridView.LayoutParams.MATCH_PARENT));
+                imageView.setImageBitmap(mThumbnail);
+  //              addBitmapToMemoryCache(imageKey, mThumbnail);
+   //         }
+   //         else{
+                imageView.setImageBitmap(mThumbnail);
+  //          }
         } else {
             imageView = (ImageView) convertView;
-        }
-        BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inSampleSize = 8;
-
-
-
-        // Get memory class of this device, exceeding this amount will throw an
-        // OutOfMemory exception.
-        final int memClass = ((ActivityManager) mContext.getSystemService(
-                Context.ACTIVITY_SERVICE)).getMemoryClass();
-
-        // Use 1/8th of the available memory for this memory cache.
-        final int cacheSize = 1024 * 1024 * memClass/4;
-
-        mMemoryCache = new LruCache(cacheSize);
-        String imageKey = mBasePath + File.separator + mImgList[position];
-        Bitmap bm = getBitmapFromMemCache(imageKey);
-        if(bm == null)
-        {
-            bm = BitmapFactory.decodeFile(mBasePath + File.separator + mImgList[position], options);
-            Bitmap mThumbnail = ThumbnailUtils.extractThumbnail(bm, 500, 550);
-            imageView.setPadding(8, 8, 8, 8);
-            imageView.setRotation(90);
-            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            imageView.setLayoutParams(new GridView.LayoutParams(GridView.LayoutParams.MATCH_PARENT, GridView.LayoutParams.MATCH_PARENT));
-            imageView.setImageBitmap(mThumbnail);
-            addBitmapToMemoryCache(imageKey, mThumbnail);
-        }
-        else{
-            imageView.setImageBitmap(bm);
         }
         return imageView;
     }

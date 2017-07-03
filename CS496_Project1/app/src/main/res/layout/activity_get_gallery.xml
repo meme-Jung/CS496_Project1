@@ -9,10 +9,8 @@
     android:paddingTop="16dp"
     android:paddingBottom="16dp" tools:context=".MainActivity"
     android:columnWidth="90dp"
-    android:numColumns="auto_fit"
+    android:numColumns="2"
     android:verticalSpacing="30dp"
-    android:horizontalSpacing="40dp"
-    android:stretchMode="columnWidth"
-    android:gravity="center">
+    android:horizontalSpacing="40dp">
 
     </GridView>

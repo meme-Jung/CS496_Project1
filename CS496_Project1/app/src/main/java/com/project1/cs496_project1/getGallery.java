@@ -46,9 +46,8 @@ public class getGallery extends AppCompatActivity {
         }
 
         basePath = mediaStorageDir.getPath();
-
         mGridView = (GridView)findViewById(R.id.gridview); // .xml의 GridView와 연결
         mCustomGalleryAdapter = new CustomGalleryAdapter(this, basePath); // 앞에서 정의한 Custom Image Adapter와 연결
-        mGridView.setAdapter(mCustomGalleryAdapter); // GridView가 Custom Image Adapter에서 받은 값을 뿌릴 수 있도록 연결
+        mGridView.setAdapter(mCustomGalleryAdapter); // GridView 출력
     }
 }
