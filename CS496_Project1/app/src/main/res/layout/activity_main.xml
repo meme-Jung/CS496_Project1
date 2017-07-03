@@ -26,6 +26,7 @@
         android:id="@+id/C"
         android:layout_width="wrap_content"
         android:layout_height="69dp"
-        android:text="C" />
+        android:text="C"
+        android:onClick="C"/>
 
 </LinearLayout>

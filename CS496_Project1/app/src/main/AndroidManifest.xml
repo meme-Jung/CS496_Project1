@@ -22,7 +22,8 @@
         </activity>
         <activity android:name=".DisplayAddressActivity" />
         <activity android:name=".getGallery" />
-        <activity android:name=".CustomGalleryAdapter"></activity>
+        <activity android:name=".CustomGalleryAdapter" />
+        <activity android:name=".C"></activity>
     </application>
 
 </manifest>

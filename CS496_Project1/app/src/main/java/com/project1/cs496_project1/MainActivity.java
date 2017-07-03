@@ -45,6 +45,16 @@ public class MainActivity extends AppCompatActivity {
                 }
                 return;
             }
+            case 102: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    C(getCurrentFocus()); // permission was granted, yay! Do the contacts-related task you need to do.
+                }
+                else {      // permission denied, boo! Disable the functionality that depends on this permission.
+                    Toast.makeText(this, "No Permissions ", Toast.LENGTH_SHORT).show();
+                }
+                return;
+            }
             // other 'case' lines to check for other permissions this app might request
         }
     }
@@ -71,5 +81,15 @@ public class MainActivity extends AppCompatActivity {
        else{
            startActivity(intent);
        }
+    }
+    public void C(View view){
+        Intent intent = new Intent(this, C.class);
+        // check there is the permission READ_CONTACTS if there is not show pop-up for request Permission, otherwise startActivity showAddress intent
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && checkSelfPermission(Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(new String[]{Manifest.permission.READ_CONTACTS}, 102);
+        }
+        else {
+            startActivity(intent);
+        }
     }
 }
