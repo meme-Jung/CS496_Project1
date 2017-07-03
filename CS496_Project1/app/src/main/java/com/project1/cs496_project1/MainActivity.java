@@ -14,6 +14,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
     }
@@ -53,6 +54,11 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void showGallery(View view){
+
+     //   if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+      //      requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE}, 100);
+            //After this point you wait for callback in onRequestPermissionsResult(int, String[], int[]) overriden method
+     // }
         Intent intent = new Intent(this, getGallery.class);
         startActivity(intent);
     }

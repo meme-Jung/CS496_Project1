@@ -3,6 +3,8 @@
     package="com.project1.cs496_project1">
 
     <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -19,7 +21,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".DisplayAddressActivity" />
-        <activity android:name=".getGallery"></activity>
+        <activity android:name=".getGallery" />
+        <activity android:name=".CustomGalleryAdapter"></activity>
     </application>
 
 </manifest>
