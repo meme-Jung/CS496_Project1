@@ -1,11 +1,12 @@
 package com.project1.cs496_project1;
 
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
-
+import java.util.*;
 import android.content.ContentUris;
 import android.database.Cursor;
 import android.net.Uri;
@@ -72,7 +73,15 @@ public class GetToBeClose extends AppCompatActivity {
 
     // 맞는 버튼이 눌렸을 때
     public void rightButton(){
-
+        if(gtbcScore == gtbcTotalScore){
+            Intent intent = new Intent(this, FinalGamePage.class);
+            startActivity(intent);
+            finish();
+        }
+        else{
+            gtbcScore += 1;
+            gtbcStart();
+        }
     }
 
     // 틀린 버튼이 눌렸을 때
@@ -126,11 +135,12 @@ public class GetToBeClose extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_get_to_be_close);
-
-
+        gtbcStart();
+    }
+    public void gtbcStart() {
         gtbcSettingButton();
         gtbcSettingPicture();
-        gtbcScore++;
+    }
 
         
 //        do {
@@ -139,13 +149,4 @@ public class GetToBeClose extends AppCompatActivity {
 //            gtbcScore++;
 //
 //        } while (checkWriteAnswer() && gtbcScore <= gtbcTotalScore);
-
-        // get all right answer
-        if (gtbcScore == gtbcTotalScore && checkWriteAnswer(getCurrentFocus())) {
-
-        } else { // wrong answer
-            callByNumber(contactArrayList.get(gtbcScore).getPhoneNumber());
-        }
-
-    }
 }
