@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
 
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
@@ -12,15 +12,22 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
+        android:text="Match the person's name and photo"
         tools:layout_editor_absoluteY="221dp"
-        tools:layout_editor_absoluteX="163dp" />
+        tools:layout_editor_absoluteX="163dp"
+        android:layout_marginBottom="80dp"
+        android:layout_above="@+id/startbutton"
+        android:layout_centerHorizontal="true" />
 
     <Button
         android:id="@+id/startbutton"
+        android:onClick="startgame"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Game Start"
         tools:layout_editor_absoluteX="137dp"
-        tools:layout_editor_absoluteY="282dp" />
-</LinearLayout>
+        tools:layout_editor_absoluteY="282dp"
+        android:layout_marginBottom="196dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+</RelativeLayout>
