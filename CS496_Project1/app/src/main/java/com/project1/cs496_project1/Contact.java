@@ -4,19 +4,22 @@ import android.net.Uri;
 
 
 public class Contact {
-    public Uri profilePicture;
-    public String name;
-    public String phoneNumber;
+    private Uri profilePicture;
+    private String name;
+    private String phoneNumber;
+    private String contactId;
+    public Integer photoId;
 
     public void setProfilePicture(Uri profilePicture) {
-        profilePicture = profilePicture;
+        this.profilePicture = profilePicture;
     }
     public void setName(String name) {
-        name = name;
+        this.name = name;
     }
     public void setPhoneNumber(String phoneNumber) {
-        phoneNumber = phoneNumber;
+        this.phoneNumber = phoneNumber;
     }
+    public void setContactId(String contactId) { this.contactId = contactId; }
 
     public Uri getProfilePicture() {
         return this.profilePicture;
@@ -27,6 +30,8 @@ public class Contact {
     public String getPhoneNumber() {
         return this.phoneNumber;
     }
-
+    public String getContactId() {
+        return this.contactId;
+    }
 
 }

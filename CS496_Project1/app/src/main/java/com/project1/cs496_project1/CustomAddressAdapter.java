@@ -39,9 +39,9 @@ public class CustomAddressAdapter extends BaseAdapter {
 
         Contact listViewItem = contactViewItemList.get(position);
 
-        profileImageView.setImageURI(listViewItem.profilePicture);
-        nameTextView.setText(listViewItem.name);
-        phoneNumberTextView.setText(listViewItem.phoneNumber);
+        profileImageView.setImageURI(listViewItem.getProfilePicture());
+        nameTextView.setText(listViewItem.getName());
+        phoneNumberTextView.setText(listViewItem.getPhoneNumber());
 
         return convertView;
     }
@@ -58,10 +58,9 @@ public class CustomAddressAdapter extends BaseAdapter {
 
     public void addItem(Uri profilePicture, String name, String phoneNumber) {
         Contact item = new Contact();
-
-        item.profilePicture = profilePicture;
-        item.name = name;
-        item.phoneNumber = phoneNumber;
+        item.setProfilePicture(profilePicture);
+        item.setName(name);
+        item.setPhoneNumber(phoneNumber);
 
         contactViewItemList.add(item);
     }

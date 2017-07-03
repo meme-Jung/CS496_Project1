@@ -1,6 +1,8 @@
 package com.project1.cs496_project1;
 
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 
@@ -10,25 +12,23 @@ import android.net.Uri;
 import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 
+import java.io.BufferedInputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
+
+import static java.security.AccessController.getContext;
 
 public class GetToBeClose extends AppCompatActivity {
 
     private ArrayList<Contact> contactArrayList = new ArrayList<>();
 
-    public ImageView gtbcImageView = (ImageView) findViewById(R.id.gtbc_photo);
-    public Button gtbcButton0 = (Button) findViewById(R.id.gtbc_button_0);
-    public Button gtbcButton1 = (Button) findViewById(R.id.gtbc_button_1);
-    public Button gtbcButton2 = (Button) findViewById(R.id.gtbc_button_2);
-    public Button gtbcButton3 = (Button) findViewById(R.id.gtbc_button_3);
-    public Button gtbcButton4 = (Button) findViewById(R.id.gtbc_button_4);
-    public Button gtbcButton5 = (Button) findViewById(R.id.gtbc_button_5);
 
     private int gtbcTotalScore = 0;
     private int gtbcScore = 0;
@@ -45,11 +45,16 @@ public class GetToBeClose extends AppCompatActivity {
             String name = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
             String phoneNumber = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
             String contactId = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.CONTACT_ID));
-            Uri profilePicture = ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, Long.parseLong(contactId));
+            Integer photoId = phones.getInt(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.PHOTO_ID));
+
+
+//            Uri profilePicture = Uri.withAppendedPath(ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, Long.parseLong(contactId)), ContactsContract.Contacts.Photo.CONTENT_DIRECTORY);
 
             c.setName(name);
             c.setPhoneNumber(phoneNumber);
-            c.setProfilePicture(profilePicture);
+            c.setContactId(contactId);
+            c.photoId = photoId;
+//            c.setProfilePicture(profilePicture);
 
             contactArrayList.add(c);
         }
@@ -61,7 +66,7 @@ public class GetToBeClose extends AppCompatActivity {
 
     // check the pressed button's name match with the photo
     // if right answer return true, else return false;
-    public boolean checkWriteAnswer() {
+    public boolean checkWriteAnswer(View view) {
         return true;
     }
 
@@ -70,6 +75,13 @@ public class GetToBeClose extends AppCompatActivity {
 
         Random random = new Random();
 
+        Button gtbcButton0 = (Button) findViewById(R.id.gtbc_button_0);
+        Button gtbcButton1 = (Button) findViewById(R.id.gtbc_button_1);
+        Button gtbcButton2 = (Button) findViewById(R.id.gtbc_button_2);
+        Button gtbcButton3 = (Button) findViewById(R.id.gtbc_button_3);
+        Button gtbcButton4 = (Button) findViewById(R.id.gtbc_button_4);
+        Button gtbcButton5 = (Button) findViewById(R.id.gtbc_button_5);
+
         gtbcButton0.setText(contactArrayList.get(random.nextInt(gtbcTotalScore)).getName());
         gtbcButton1.setText(contactArrayList.get(random.nextInt(gtbcTotalScore)).getName());
         gtbcButton2.setText(contactArrayList.get(random.nextInt(gtbcTotalScore)).getName());
@@ -77,6 +89,18 @@ public class GetToBeClose extends AppCompatActivity {
         gtbcButton4.setText(contactArrayList.get(random.nextInt(gtbcTotalScore)).getName());
         gtbcButton5.setText(contactArrayList.get(random.nextInt(gtbcTotalScore)).getName());
 
+    }
+
+
+    public void gtbcSettingPicture() {
+        ImageView gtbcImageView = (ImageView) findViewById(R.id.gtbc_photo);
+        String contactId = contactArrayList.get(gtbcScore).getContactId();
+        Uri contactUri = ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, Long.valueOf(contactId));
+        InputStream photo_stream = ContactsContract.Contacts.openContactPhotoInputStream(getContentResolver(), contactUri, true);
+        gtbcImageView.setImageBitmap(BitmapFactory.decodeStream(photo_stream));
+
+//        Uri profilePicture = Uri.withAppendedPath(ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, Long.parseLong(contactId)), ContactsContract.Contacts.Photo.CONTENT_DIRECTORY);
+//        gtbcImageView.setImageURI(profilePicture);
     }
 
 
@@ -94,9 +118,11 @@ public class GetToBeClose extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_get_to_be_close);
 
-        gtbcImageView.setImageURI(contactArrayList.get(gtbcScore).getProfilePicture());
+
         gtbcSettingButton();
+        gtbcSettingPicture();
         gtbcScore++;
+
         
 //        do {
 //            gtbcImageView.setImageURI(contactArrayList.get(gtbcScore).getProfilePicture());
@@ -106,7 +132,7 @@ public class GetToBeClose extends AppCompatActivity {
 //        } while (checkWriteAnswer() && gtbcScore <= gtbcTotalScore);
 
         // get all right answer
-        if (gtbcScore == gtbcTotalScore && checkWriteAnswer()) {
+        if (gtbcScore == gtbcTotalScore && checkWriteAnswer(getCurrentFocus())) {
 
         } else { // wrong answer
             callByNumber(contactArrayList.get(gtbcScore).getPhoneNumber());
