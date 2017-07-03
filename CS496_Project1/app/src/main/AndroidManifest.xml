@@ -27,7 +27,8 @@
         <activity android:name=".CustomGalleryAdapter" />
         <activity android:name=".C" />
         <activity android:name=".GetToBeClose" />
-        <activity android:name=".FinalGamePage"></activity>
+        <activity android:name=".FinalGamePage" />
+        <activity android:name=".GameOverPage"></activity>
     </application>
 
 </manifest>
