@@ -63,13 +63,22 @@ public class GetToBeClose extends AppCompatActivity {
 //        long seed = System.nanoTime();
         Collections.shuffle(contactArrayList);
     }
-
     // check the pressed button's name match with the photo
     // if right answer return true, else return false;
+    // 맞는지 틀린지 확인해서 맞으면 rightButton, 틀리면 wrongButton 실행;
     public boolean checkWriteAnswer(View view) {
         return true;
     }
 
+    // 맞는 버튼이 눌렸을 때
+    public void rightButton(){
+
+    }
+
+    // 틀린 버튼이 눌렸을 때
+    public void wrongButton(String phoneNumber){
+
+    }
     // setting button's text by names randomly, but must be included correct name
     public void gtbcSettingButton() {
 
