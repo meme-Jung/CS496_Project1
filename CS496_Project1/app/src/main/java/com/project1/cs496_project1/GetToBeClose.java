@@ -80,13 +80,13 @@ public class GetToBeClose extends AppCompatActivity {
 
     // 맞는 버튼이 눌렸을 때
     public void rightButton(){
+        gtbcScore += 1;
         if(gtbcScore == gtbcTotalScore){
             Intent intent = new Intent(this, FinalGamePage.class);
             startActivity(intent);
             finish();
         }
-        else{
-            gtbcScore += 1;
+        else{;
             gtbcStart();
         }
     }

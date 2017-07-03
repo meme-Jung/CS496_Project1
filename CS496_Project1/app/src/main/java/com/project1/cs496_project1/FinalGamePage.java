@@ -15,7 +15,7 @@ public class FinalGamePage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_final_game_page);
     }
-    public void showGallery(View view){
+    public void gotomain(View view){
         finish();
     }
 }
