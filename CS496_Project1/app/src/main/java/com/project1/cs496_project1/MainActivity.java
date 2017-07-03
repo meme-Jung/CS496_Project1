@@ -35,7 +35,16 @@ public class MainActivity extends AppCompatActivity {
                 }
                 return;
             }
-
+            case 101: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    showGallery(getCurrentFocus()); // permission was granted, yay! Do the contacts-related task you need to do.
+                }
+                else {      // permission denied, boo! Disable the functionality that depends on this permission.
+                    Toast.makeText(this, "No Permissions ", Toast.LENGTH_SHORT).show();
+                }
+                return;
+            }
             // other 'case' lines to check for other permissions this app might request
         }
     }
@@ -54,12 +63,13 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void showGallery(View view){
-
-     //   if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-      //      requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE}, 100);
-            //After this point you wait for callback in onRequestPermissionsResult(int, String[], int[]) overriden method
-     // }
         Intent intent = new Intent(this, getGallery.class);
-        startActivity(intent);
+       if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+           requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 101);
+           //After this point you wait for callback in onRequestPermissionsResult(int, String[], int[]) overriden method
+       }
+       else{
+           startActivity(intent);
+       }
     }
 }
