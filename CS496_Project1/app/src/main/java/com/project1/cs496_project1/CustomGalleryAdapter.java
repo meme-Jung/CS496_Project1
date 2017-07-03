@@ -1,5 +1,6 @@
 package com.project1.cs496_project1;
 
+import android.app.ActivityManager;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
@@ -8,6 +9,7 @@ import android.media.ThumbnailUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.LruCache;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -23,6 +25,8 @@ public class CustomGalleryAdapter extends BaseAdapter {
     String mBasePath = null;
     Bitmap bm;
     String[] mImgList;
+    private LruCache mMemoryCache;
+
     public CustomGalleryAdapter(Context c , String basepath) {
         mContext = c;
 
@@ -34,7 +38,6 @@ public class CustomGalleryAdapter extends BaseAdapter {
         TypedArray array = mContext.obtainStyledAttributes(R.styleable.GalleryTheme);
         CustomGalleryItemBg = array.getResourceId(R.styleable.GalleryTheme_android_galleryItemBackground, 0);
         array.recycle();
-
     }
 
     @Override
@@ -56,6 +59,15 @@ public class CustomGalleryAdapter extends BaseAdapter {
     public long getItemId(int position) {
         return position;
     }
+    public void addBitmapToMemoryCache(String key, Bitmap bitmap) {
+        if (getBitmapFromMemCache(key) == null) {
+            mMemoryCache.put(key, bitmap);
+        }
+    }
+
+    public Bitmap getBitmapFromMemCache(String key) {
+        return (Bitmap) mMemoryCache.get(key);
+    }
 
     // create a new ImageView for each item referenced by the Adapter
     @Override
@@ -67,13 +79,36 @@ public class CustomGalleryAdapter extends BaseAdapter {
         } else {
             imageView = (ImageView) convertView;
         }
-        bm = BitmapFactory.decodeFile(mBasePath + File.separator + mImgList[position]);
-        Bitmap mThumbnail = ThumbnailUtils.extractThumbnail(bm, 500, 550);
-        imageView.setPadding(8, 8, 8, 8);
-        imageView.setRotation(90);
-        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        imageView.setLayoutParams(new GridView.LayoutParams(GridView.LayoutParams.MATCH_PARENT, GridView.LayoutParams.MATCH_PARENT));
-        imageView.setImageBitmap(mThumbnail);
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inSampleSize = 8;
+
+
+
+        // Get memory class of this device, exceeding this amount will throw an
+        // OutOfMemory exception.
+        final int memClass = ((ActivityManager) mContext.getSystemService(
+                Context.ACTIVITY_SERVICE)).getMemoryClass();
+
+        // Use 1/8th of the available memory for this memory cache.
+        final int cacheSize = 1024 * 1024 * memClass/4;
+
+        mMemoryCache = new LruCache(cacheSize);
+        String imageKey = mBasePath + File.separator + mImgList[position];
+        Bitmap bm = getBitmapFromMemCache(imageKey);
+        if(bm == null)
+        {
+            bm = BitmapFactory.decodeFile(mBasePath + File.separator + mImgList[position], options);
+            Bitmap mThumbnail = ThumbnailUtils.extractThumbnail(bm, 500, 550);
+            imageView.setPadding(8, 8, 8, 8);
+            imageView.setRotation(90);
+            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            imageView.setLayoutParams(new GridView.LayoutParams(GridView.LayoutParams.MATCH_PARENT, GridView.LayoutParams.MATCH_PARENT));
+            imageView.setImageBitmap(mThumbnail);
+            addBitmapToMemoryCache(imageKey, mThumbnail);
+        }
+        else{
+            imageView.setImageBitmap(bm);
+        }
         return imageView;
     }
 }
