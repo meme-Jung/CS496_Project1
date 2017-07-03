@@ -85,7 +85,10 @@ public class MainActivity extends AppCompatActivity {
     public void C(View view){
         Intent intent = new Intent(this, C.class);
         // check there is the permission READ_CONTACTS if there is not show pop-up for request Permission, otherwise startActivity showAddress intent
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && checkSelfPermission(Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && checkSelfPermission(Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(new String[]{Manifest.permission.READ_CONTACTS,Manifest.permission.CALL_PHONE}, 102);
+        }
+        else if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && checkSelfPermission(Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED ){
             requestPermissions(new String[]{Manifest.permission.READ_CONTACTS}, 102);
         }
         else {
