@@ -22,13 +22,13 @@ public class GetToBeClose extends AppCompatActivity {
 
     private ArrayList<Contact> contactArrayList = new ArrayList<>();
 
-    public ImageView gtbcImageView = (ImageView) findViewById(R.id.gtbc_photo);
+/*    public ImageView gtbcImageView = (ImageView) findViewById(R.id.gtbc_photo);
     public Button gtbcButton0 = (Button) findViewById(R.id.gtbc_button_0);
     public Button gtbcButton1 = (Button) findViewById(R.id.gtbc_button_1);
     public Button gtbcButton2 = (Button) findViewById(R.id.gtbc_button_2);
     public Button gtbcButton3 = (Button) findViewById(R.id.gtbc_button_3);
     public Button gtbcButton4 = (Button) findViewById(R.id.gtbc_button_4);
-    public Button gtbcButton5 = (Button) findViewById(R.id.gtbc_button_5);
+    public Button gtbcButton5 = (Button) findViewById(R.id.gtbc_button_5);*/
 
     private int gtbcTotalScore = 0;
     private int gtbcScore = 0;
@@ -69,14 +69,14 @@ public class GetToBeClose extends AppCompatActivity {
     public void gtbcSettingButton() {
 
         Random random = new Random();
-
+/*
         gtbcButton0.setText(contactArrayList.get(random.nextInt(gtbcTotalScore)).getName());
         gtbcButton1.setText(contactArrayList.get(random.nextInt(gtbcTotalScore)).getName());
         gtbcButton2.setText(contactArrayList.get(random.nextInt(gtbcTotalScore)).getName());
         gtbcButton3.setText(contactArrayList.get(random.nextInt(gtbcTotalScore)).getName());
         gtbcButton4.setText(contactArrayList.get(random.nextInt(gtbcTotalScore)).getName());
         gtbcButton5.setText(contactArrayList.get(random.nextInt(gtbcTotalScore)).getName());
-
+*/
     }
 
 
@@ -94,7 +94,7 @@ public class GetToBeClose extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_get_to_be_close);
 
-        gtbcImageView.setImageURI(contactArrayList.get(gtbcScore).getProfilePicture());
+   //     gtbcImageView.setImageURI(contactArrayList.get(gtbcScore).getProfilePicture());
         gtbcSettingButton();
         gtbcScore++;
         

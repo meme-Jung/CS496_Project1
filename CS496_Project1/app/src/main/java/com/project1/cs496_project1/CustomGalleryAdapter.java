@@ -103,7 +103,7 @@ public class CustomGalleryAdapter extends BaseAdapter {
   //              addBitmapToMemoryCache(imageKey, mThumbnail);
    //         }
    //         else{
-                imageView.setImageBitmap(mThumbnail);
+ //               imageView.setImageBitmap(mThumbnail);
   //          }
         } else {
             imageView = (ImageView) convertView;
