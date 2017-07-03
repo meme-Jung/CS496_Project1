@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.io.BufferedInputStream;
 import java.io.InputStream;
@@ -81,6 +82,7 @@ public class GetToBeClose extends AppCompatActivity {
     // 맞는 버튼이 눌렸을 때
     public void rightButton(){
         gtbcScore += 1;
+        gtbcSettingScoreBoard();
         if(gtbcScore == gtbcTotalScore){
             Intent intent = new Intent(this, FinalGamePage.class);
             startActivity(intent);
@@ -110,6 +112,18 @@ public class GetToBeClose extends AppCompatActivity {
         Collections.shuffle(randomNumberList);
         return randomNumberList;
     }
+
+
+    public void gtbcSettingScoreBoard() {
+        TextView gtbcScoreTextView = (TextView) findViewById(R.id.gtbcScoreTextView);
+        gtbcScoreTextView.setText(String.valueOf(gtbcScore));
+    }
+
+    public void gtbcSettingTotalScoreBoard() {
+        TextView gtbcTotalScoreTextView = (TextView) findViewById(R.id.gtbcTotalScoreTextView);
+        gtbcTotalScoreTextView.setText(String.valueOf(gtbcTotalScore));
+    }
+
 
     // setting button's text by names randomly, but must be included correct name
     public void gtbcSettingButton() {
@@ -162,9 +176,13 @@ public class GetToBeClose extends AppCompatActivity {
         setContentView(R.layout.activity_get_to_be_close);
         gtbcStart();
     }
+
+
+
     public void gtbcStart() {
         gtbcSettingButton();
         gtbcSettingPicture();
+        gtbcSettingTotalScoreBoard();
     }
 
         
