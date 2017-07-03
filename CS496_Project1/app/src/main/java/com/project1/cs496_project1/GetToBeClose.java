@@ -20,7 +20,9 @@ import android.widget.ListView;
 import java.io.BufferedInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 
 import static java.security.AccessController.getContext;
@@ -64,10 +66,15 @@ public class GetToBeClose extends AppCompatActivity {
         Collections.shuffle(contactArrayList);
     }
     // check the pressed button's name match with the photo
-    // if right answer return true, else return false;
+    //
     // 맞는지 틀린지 확인해서 맞으면 rightButton, 틀리면 wrongButton 실행;
-    public boolean checkWriteAnswer(View view) {
-        return true;
+    public void checkRightAnswer(View view) {
+        String buttonText = ((Button) view).getText().toString();
+        if (buttonText == contactArrayList.get(gtbcScore).getName()) { // same name
+            rightButton();
+        } else {        // wrong answer button pressed
+            wrongButton(contactArrayList.get(gtbcScore).getPhoneNumber());
+        }
     }
 
     // 맞는 버튼이 눌렸을 때
@@ -79,10 +86,28 @@ public class GetToBeClose extends AppCompatActivity {
     public void wrongButton(String phoneNumber){
 
     }
+
+
+    public ArrayList<Integer> randomNumberGet(int mustIncludedInt, int boundInt) {
+        Random random = new Random();
+
+        ArrayList<Integer> randomNumberList = new ArrayList<>();
+        randomNumberList.add(mustIncludedInt);
+        while (randomNumberList.size() < 6) {
+            Integer randomNumber =  random.nextInt(boundInt);
+            if (!randomNumberList.contains(randomNumber))
+                randomNumberList.add(randomNumber);
+        }
+        Collections.shuffle(randomNumberList);
+        return randomNumberList;
+    }
+
     // setting button's text by names randomly, but must be included correct name
     public void gtbcSettingButton() {
-
+    //random number 뽑아내기
         Random random = new Random();
+
+        ArrayList<Integer> randomNumberList = randomNumberGet(gtbcScore, gtbcTotalScore);
 
         Button gtbcButton0 = (Button) findViewById(R.id.gtbc_button_0);
         Button gtbcButton1 = (Button) findViewById(R.id.gtbc_button_1);
@@ -91,12 +116,12 @@ public class GetToBeClose extends AppCompatActivity {
         Button gtbcButton4 = (Button) findViewById(R.id.gtbc_button_4);
         Button gtbcButton5 = (Button) findViewById(R.id.gtbc_button_5);
 
-        gtbcButton0.setText(contactArrayList.get(random.nextInt(gtbcTotalScore)).getName());
-        gtbcButton1.setText(contactArrayList.get(random.nextInt(gtbcTotalScore)).getName());
-        gtbcButton2.setText(contactArrayList.get(random.nextInt(gtbcTotalScore)).getName());
-        gtbcButton3.setText(contactArrayList.get(random.nextInt(gtbcTotalScore)).getName());
-        gtbcButton4.setText(contactArrayList.get(random.nextInt(gtbcTotalScore)).getName());
-        gtbcButton5.setText(contactArrayList.get(random.nextInt(gtbcTotalScore)).getName());
+        gtbcButton0.setText(contactArrayList.get(randomNumberList.get(0)).getName());
+        gtbcButton1.setText(contactArrayList.get(randomNumberList.get(1)).getName());
+        gtbcButton2.setText(contactArrayList.get(randomNumberList.get(2)).getName());
+        gtbcButton3.setText(contactArrayList.get(randomNumberList.get(3)).getName());
+        gtbcButton4.setText(contactArrayList.get(randomNumberList.get(4)).getName());
+        gtbcButton5.setText(contactArrayList.get(randomNumberList.get(5)).getName());
 
     }
 
@@ -141,11 +166,7 @@ public class GetToBeClose extends AppCompatActivity {
 //        } while (checkWriteAnswer() && gtbcScore <= gtbcTotalScore);
 
         // get all right answer
-        if (gtbcScore == gtbcTotalScore && checkWriteAnswer(getCurrentFocus())) {
 
-        } else { // wrong answer
-            callByNumber(contactArrayList.get(gtbcScore).getPhoneNumber());
-        }
 
     }
 }
