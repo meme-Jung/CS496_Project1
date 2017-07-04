@@ -57,19 +57,14 @@ public class GetToBeClose extends AppCompatActivity {
 
             Contact c = new Contact();
 
-//            Uri profilePicture = Uri.withAppendedPath(ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, Long.parseLong(contactId)), ContactsContract.Contacts.Photo.CONTENT_DIRECTORY);
-
             c.setName(name);
             c.setPhoneNumber(phoneNumber);
             c.setContactId(contactId);
-            c.setPhotoId(photoId);
-//            c.setProfilePicture(profilePicture);
 
             contactArrayList.add(c);
         }
         phones.close();
 
-//        long seed = System.nanoTime();
         Collections.shuffle(contactArrayList);
     }
     // check the pressed button's name match with the photo
@@ -179,19 +174,10 @@ public class GetToBeClose extends AppCompatActivity {
     }
 
 
-
     public void gtbcStart() {
         gtbcSettingButton();
         gtbcSettingPicture();
         gtbcSettingTotalScoreBoard();
     }
-
-        
-//        do {
-//            gtbcImageView.setImageURI(contactArrayList.get(gtbcScore).getProfilePicture());
-//            gtbcSettingButton();
-//            gtbcScore++;
-//
-//        } while (checkWriteAnswer() && gtbcScore <= gtbcTotalScore);
 
 }

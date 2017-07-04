@@ -51,10 +51,8 @@ public class DisplayAddressActivity extends AppCompatActivity {
                 continue;
             String phoneNumber = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
             String contactId = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.CONTACT_ID));
-            Integer photoId = phones.getInt(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.PHOTO_ID));
-            Uri profilePicture = ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, Long.parseLong(contactId));
 
-            adapter.addItem(Uri.withAppendedPath(profilePicture, ContactsContract.Contacts.Photo.CONTENT_DIRECTORY), name, phoneNumber, contactId, photoId);
+            adapter.addItem(name, phoneNumber, contactId);
         }
 
         phones.close();

@@ -75,13 +75,13 @@ public class CustomAddressAdapter extends BaseAdapter {
         return contactViewItemList.get(position) ;
     }
 
-    public void addItem(Uri profilePicture, String name, String phoneNumber, String contactId, Integer photoId) {
+    public void addItem(String name, String phoneNumber, String contactId) {
         Contact item = new Contact();
-        item.setProfilePicture(profilePicture);
+//        item.setProfilePicture(profilePicture);
         item.setName(name);
         item.setPhoneNumber(phoneNumber);
         item.setContactId(contactId);
-        item.setPhotoId(photoId);
+//        item.setPhotoId(pho1oId);
 
         contactViewItemList.add(item);
     }
