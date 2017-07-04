@@ -2,17 +2,18 @@
 
 
 <LinearLayout
-
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal"
-    android:weightSum="1">
+    android:weightSum="3">
+
     <Button
         android:id="@+id/phonebook"
         android:layout_width="127dp"
         android:layout_height="69dp"
+        android:layout_weight="1"
         android:text="phonebook"
         android:onClick="showAddress"/>
 
@@ -20,6 +21,7 @@
         android:id="@+id/Gallery"
         android:layout_width="127dp"
         android:layout_height="69dp"
+        android:layout_weight="1"
         android:onClick="showGallery"
         android:text="Gallery" />
 
@@ -27,6 +29,7 @@
         android:id="@+id/C"
         android:layout_width="127dp"
         android:layout_height="69dp"
+        android:layout_weight="1"
         android:onClick="C"
         android:text="Getclose" />
 
