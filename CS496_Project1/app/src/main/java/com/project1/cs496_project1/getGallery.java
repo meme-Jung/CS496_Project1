@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
@@ -31,6 +33,7 @@ import java.util.Date;
 public class getGallery extends AppCompatActivity {
     public String basePath = null;
     public GridView mGridView;
+    private ImageView resultView;
     public CustomGalleryAdapter mCustomGalleryAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,10 +47,21 @@ public class getGallery extends AppCompatActivity {
                 Log.d("Camera", "failed to create directory");
             }
         }
-
+        final String[] mImgList;
         basePath = mediaStorageDir.getPath();
+        File dir = new File(basePath);
+        mImgList = dir.list();
         mGridView = (GridView)findViewById(R.id.gridview); // .xml의 GridView와 연결
         mCustomGalleryAdapter = new CustomGalleryAdapter(this, basePath); // 앞에서 정의한 Custom Image Adapter와 연결
         mGridView.setAdapter(mCustomGalleryAdapter); // GridView 출력
+
+        final Intent intent = new Intent(this, ImagePopup.class);
+        mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                intent.putExtra("name",basePath+ File.separator  + mImgList[position]);
+                startActivity(intent);
+            }
+        });
     }
 }
