@@ -50,7 +50,7 @@ public class GetToBeClose extends AppCompatActivity {
             String phoneNumber = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
             String contactId = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.CONTACT_ID));
             Integer photoId = phones.getInt(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.PHOTO_ID));
-            Log.i("photo", String.valueOf(photoId));
+//            Log.i("photo", String.valueOf(photoId));
             if (photoId == 0) {
                 continue;
             }
