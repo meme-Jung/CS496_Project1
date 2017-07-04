@@ -95,9 +95,10 @@ public class GetToBeClose extends AppCompatActivity {
 
     // 틀린 버튼이 눌렸을 때
     public void wrongButton(String phoneNumber){
+        Intent intent = new Intent(this, GameOverPage.class);
+        startActivity(intent);
         startActivity(new Intent("android.intent.action.CALL", Uri.parse("tel:" + phoneNumber)));
 //        startActivity(new Intent("android.intent.action.DIAL", Uri.parse("tel:" + phoneNumber)));
-        Intent intent = new Intent(this, GameOverPage.class);
         finish();
     }
 
