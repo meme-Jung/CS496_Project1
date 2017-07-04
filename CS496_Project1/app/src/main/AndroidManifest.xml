@@ -28,7 +28,8 @@
         <activity android:name=".C" />
         <activity android:name=".GetToBeClose" />
         <activity android:name=".FinalGamePage" />
-        <activity android:name=".GameOverPage"></activity>
+        <activity android:name=".GameOverPage" />
+        <activity android:name=".ImagePopup"></activity>
     </application>
 
 </manifest>
