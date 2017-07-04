@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.provider.ContactsContract;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,8 +46,10 @@ public class CustomAddressAdapter extends BaseAdapter {
 
         Uri contactUri = ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, Long.valueOf(listViewItem.getContactId()));
         InputStream photo_stream = ContactsContract.Contacts.openContactPhotoInputStream(context.getContentResolver(), contactUri, true);
-
-        if (!(photo_stream == null))
+        Log.i("photoId", String.valueOf(listViewItem.getPhotoId()));
+        Log.i("name", listViewItem.getName());
+        Log.i("photo_stream", listViewItem.getName());
+        if (listViewItem.getPhotoId() != null)
             profileImageView.setImageBitmap(BitmapFactory.decodeStream(photo_stream));
 
 
@@ -67,12 +70,13 @@ public class CustomAddressAdapter extends BaseAdapter {
         return contactViewItemList.get(position) ;
     }
 
-    public void addItem(Uri profilePicture, String name, String phoneNumber, String contactId) {
+    public void addItem(Uri profilePicture, String name, String phoneNumber, String contactId, Integer photoId) {
         Contact item = new Contact();
         item.setProfilePicture(profilePicture);
         item.setName(name);
         item.setPhoneNumber(phoneNumber);
         item.setContactId(contactId);
+        item.setPhotoId(photoId);
 
         contactViewItemList.add(item);
     }
