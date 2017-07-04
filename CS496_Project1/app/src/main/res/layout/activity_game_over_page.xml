@@ -12,31 +12,28 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Game Over!  "
+        android:text="Game Over!"
         tools:layout_editor_absoluteY="221dp"
         tools:layout_editor_absoluteX="163dp"
-        android:layout_marginBottom="72dp"
         android:textSize="45sp"
-        android:layout_above="@+id/gotomain"
-        android:layout_alignLeft="@+id/gotomain"
-        android:layout_alignStart="@+id/gotomain"
-        android:layout_marginLeft="26dp"
-        android:layout_marginStart="26dp" />
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="152dp" />
 
     <Button
         android:id="@+id/gotomain"
         android:onClick="gotomain"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Goto Main Page"
+        android:text="Main"
         tools:layout_editor_absoluteX="137dp"
         tools:layout_editor_absoluteY="282dp"
-        android:layout_marginBottom="177dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginLeft="47dp"
-        android:layout_marginStart="47dp" />
+        android:layout_marginLeft="18dp"
+        android:layout_marginStart="18dp"
+        android:layout_alignBaseline="@+id/retry"
+        android:layout_alignBottom="@+id/retry"
+        android:layout_alignLeft="@+id/textView"
+        android:layout_alignStart="@+id/textView" />
     <Button
         android:id="@+id/retry"
         android:onClick="retry"
@@ -45,8 +42,10 @@
         android:text="Retry"
         tools:layout_editor_absoluteX="137dp"
         tools:layout_editor_absoluteY="282dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginTop="50dp"
         android:layout_below="@+id/textView"
-        android:layout_toRightOf="@+id/gotomain"
         android:layout_alignRight="@+id/textView"
         android:layout_alignEnd="@+id/textView" />
 </RelativeLayout>
