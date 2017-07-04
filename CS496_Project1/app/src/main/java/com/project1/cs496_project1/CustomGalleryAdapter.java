@@ -31,7 +31,7 @@ public class CustomGalleryAdapter extends BaseAdapter {
     String mBasePath = null;
 
     String mBasePath2 = null;
-    Bitmap bm;
+    Bitmap bm = null;
     String[] mImgList1;
     String[] mImgList2;
     String[] mImgList;
@@ -51,40 +51,34 @@ public class CustomGalleryAdapter extends BaseAdapter {
         final int memClass = ((ActivityManager) mContext.getSystemService(
                 Context.ACTIVITY_SERVICE)).getMemoryClass();
         final int cacheSize = 1024 * 1024 * memClass/2;
-        mMemoryCache = new LruCache(cacheSize);
+        mMemoryCache = new LruCache(cacheSize){
 
-        ImageView imageView;
-        imageView = new ImageView(mContext);
+            protected int sizeOf(String Key, Bitmap bitmap){
+                return (bitmap.getRowBytes() * bitmap.getHeight() * 4)/1024;
+            }
+        };
+        int count=0;
         mImgList = new String[mImgList1.length+mImgList2.length];
         for (i=0; i<mImgList2.length; i++)
         {
             if(mImgList2[i].contains("jpg")) {
                 mImgList2[i] = mBasePath2 + File.separator + mImgList2[i];
-                mImgList[i] = mImgList2[i];
-
-            }
-            else{
-
+                mImgList[count] = mImgList2[i];
+                count ++;
             }
         }
         for (i=0; i<mImgList1.length; i++)
         {
             if(mImgList1[i].contains("jpg")) {
-
                 mImgList1[i] = mBasePath + File.separator + mImgList1[i];
-                mImgList[i + mImgList2.length] = mImgList1[i];
-            }
-            else{
-
+                mImgList[count] = mImgList1[i];
+                count++;
             }
         }
+        count --;
         TypedArray array = mContext.obtainStyledAttributes(R.styleable.GalleryTheme);
         CustomGalleryItemBg = array.getResourceId(R.styleable.GalleryTheme_android_galleryItemBackground, 0);
         array.recycle();
-
-
-        //           BitmapFactory.Options options = new BitmapFactory.Options();
-//            options.inSampleSize = 4;
     }
 
     @Override
@@ -94,9 +88,6 @@ public class CustomGalleryAdapter extends BaseAdapter {
     @Override
     public Object getItem(int position) {
         return position;
-    }
-    public String getItemPath(int position){
-        return mImgList[position];
     }
     @Override
     public long getItemId(int position) {
@@ -120,50 +111,25 @@ public class CustomGalleryAdapter extends BaseAdapter {
         String imageKey = String.valueOf(position);
         Bitmap bm = getBitmapFromMemCache(imageKey);
         imageView = new ImageView(mContext);
-        if (bm == null || convertView==null) {
-  //          Log.i("getview_null", String.valueOf(position));
-            // if it's not recycled, initialize some attributes
-            // Get memory class of this device, exceeding this amount will throw an
-            // OutOfMemory exception.
+        if (bm == null) {
+            bm = BitmapFactory.decodeFile(mImgList[position]);
+            Bitmap mThumbnail = ThumbnailUtils.extractThumbnail(bm, 500, 550);
+            imageView.setPadding(8, 8, 8, 8);
+            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            imageView.setLayoutParams(new GridView.LayoutParams(GridView.LayoutParams.MATCH_PARENT, GridView.LayoutParams.MATCH_PARENT));
 
-
-            // Use 1/8th of the available memory for this memory cache.
-//           final int cacheSize = 1024 * 1024 * memClass/4;
-
- //           mMemoryCache = new LruCache(cacheSize)
- //           String imageKey = mBasePath + File.separator + mImgList[position];
-            //           Bitmap bm = getBitmapFromMemCache(imageKey);
-
- //           BitmapFactory.Options options = new BitmapFactory.Options();
-//            options.inSampleSize = 4;
-    //        if(bm == null)
-    //        {
-                bm = BitmapFactory.decodeFile(mImgList[position]);
-                Bitmap mThumbnail = ThumbnailUtils.extractThumbnail(bm, 500, 550);
-                imageView.setPadding(8, 8, 8, 8);
-                imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                imageView.setLayoutParams(new GridView.LayoutParams(GridView.LayoutParams.MATCH_PARENT, GridView.LayoutParams.MATCH_PARENT));
-
-                imageView.setRotation(90);
-            if(mThumbnail != null){
+            if (mThumbnail != null) {
+                if(mImgList[position].contains(mBasePath)) {
+                }
                 addBitmapToMemoryCache(imageKey, mThumbnail);
-
             }
-                imageView.setImageBitmap(mThumbnail);
-   //         }
-   //         else{
-  //          }
+            imageView.setImageBitmap(mThumbnail);
         }
-        else {/*
-                imageView = new ImageView(mContext);
-                bm = BitmapFactory.decodeFile(mImgList[position]);
-                Bitmap mThumbnail = ThumbnailUtils.extractThumbnail(bm, 500, 550);
-                imageView.setPadding(8, 8, 8, 8);
+        else {
+            if(mImgList[position].contains(mBasePath)) {
                 imageView.setRotation(90);
-                imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                imageView.setLayoutParams(new GridView.LayoutParams(GridView.LayoutParams.MATCH_PARENT, GridView.LayoutParams.MATCH_PARENT));
-                imageView.setImageBitmap(mThumbnail);*/
-                imageView.setImageBitmap(bm);
+            }
+            imageView.setImageBitmap(bm);
         }
         return imageView;
     }
