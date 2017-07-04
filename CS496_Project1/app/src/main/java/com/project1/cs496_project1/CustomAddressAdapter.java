@@ -39,6 +39,7 @@ public class CustomAddressAdapter extends BaseAdapter {
         }
 
         ImageView profileImageView = (ImageView) convertView.findViewById(R.id.photo);
+
         TextView nameTextView = (TextView) convertView.findViewById(R.id.name);
         TextView phoneNumberTextView = (TextView) convertView.findViewById(R.id.phoneNumber);
 
@@ -46,14 +47,18 @@ public class CustomAddressAdapter extends BaseAdapter {
 
         Uri contactUri = ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, Long.valueOf(listViewItem.getContactId()));
         InputStream photo_stream = ContactsContract.Contacts.openContactPhotoInputStream(context.getContentResolver(), contactUri, true);
-        Log.i("photoId", String.valueOf(listViewItem.getPhotoId()));
-        Log.i("name", listViewItem.getName());
-        Log.i("photo_stream", listViewItem.getName());
-        if (listViewItem.getPhotoId() != null)
-            profileImageView.setImageBitmap(BitmapFactory.decodeStream(photo_stream));
+//        Log.e("name", listViewItem.getName());
+//        Log.i("photoId", String.valueOf(listViewItem.getPhotoId()));
+//        Log.i("contactId", String.valueOf(listViewItem.getContactId()));
+//        Log.i("long contactId", String.valueOf(Long.valueOf(listViewItem.getContactId())));
+//        Log.i("photo_stream", String.valueOf(photo_stream==null));
+        profileImageView.setImageBitmap(BitmapFactory.decodeStream(photo_stream));
+//        if (photo_stream != null)
+//            profileImageView.setImageBitmap(BitmapFactory.decodeStream(photo_stream));
+//        else
+//            profileImageView.setImageResource(R.drawable.);
 
 
-//        profileImageView.setImageURI(listViewItem.getProfilePicture());
         nameTextView.setText(listViewItem.getName());
         phoneNumberTextView.setText(listViewItem.getPhoneNumber());
 
