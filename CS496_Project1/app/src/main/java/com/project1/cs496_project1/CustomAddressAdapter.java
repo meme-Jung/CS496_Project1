@@ -1,7 +1,10 @@
 package com.project1.cs496_project1;
 
+import android.content.ContentUris;
 import android.content.Context;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +12,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 
 
@@ -39,7 +43,14 @@ public class CustomAddressAdapter extends BaseAdapter {
 
         Contact listViewItem = contactViewItemList.get(position);
 
-        profileImageView.setImageURI(listViewItem.getProfilePicture());
+        Uri contactUri = ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, Long.valueOf(listViewItem.getContactId()));
+        InputStream photo_stream = ContactsContract.Contacts.openContactPhotoInputStream(context.getContentResolver(), contactUri, true);
+
+        if (!(photo_stream == null))
+            profileImageView.setImageBitmap(BitmapFactory.decodeStream(photo_stream));
+
+
+//        profileImageView.setImageURI(listViewItem.getProfilePicture());
         nameTextView.setText(listViewItem.getName());
         phoneNumberTextView.setText(listViewItem.getPhoneNumber());
 
@@ -56,14 +67,16 @@ public class CustomAddressAdapter extends BaseAdapter {
         return contactViewItemList.get(position) ;
     }
 
-    public void addItem(Uri profilePicture, String name, String phoneNumber) {
+    public void addItem(Uri profilePicture, String name, String phoneNumber, String contactId) {
         Contact item = new Contact();
         item.setProfilePicture(profilePicture);
         item.setName(name);
         item.setPhoneNumber(phoneNumber);
+        item.setContactId(contactId);
 
         contactViewItemList.add(item);
     }
+
 
 
 }

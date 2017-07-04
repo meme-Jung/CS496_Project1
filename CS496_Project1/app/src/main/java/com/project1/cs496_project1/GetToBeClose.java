@@ -51,7 +51,7 @@ public class GetToBeClose extends AppCompatActivity {
             String contactId = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.CONTACT_ID));
             Integer photoId = phones.getInt(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.PHOTO_ID));
 //            Log.i("photo", String.valueOf(photoId));
-            if (photoId == 0) {
+            if (photoId == 0) { // there is no contact picture
                 continue;
             }
 
@@ -62,7 +62,7 @@ public class GetToBeClose extends AppCompatActivity {
             c.setName(name);
             c.setPhoneNumber(phoneNumber);
             c.setContactId(contactId);
-            c.photoId = photoId;
+            c.setPhotoId(photoId);
 //            c.setProfilePicture(profilePicture);
 
             contactArrayList.add(c);

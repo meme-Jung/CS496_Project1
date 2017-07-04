@@ -8,11 +8,9 @@ public class Contact {
     private String name;
     private String phoneNumber;
     private String contactId;
-    public Integer photoId;
+    private Integer photoId;
 
-    public void setProfilePicture(Uri profilePicture) {
-        this.profilePicture = profilePicture;
-    }
+    public void setProfilePicture(Uri profilePicture) { this.profilePicture = profilePicture; }
     public void setName(String name) {
         this.name = name;
     }
@@ -20,6 +18,7 @@ public class Contact {
         this.phoneNumber = phoneNumber;
     }
     public void setContactId(String contactId) { this.contactId = contactId; }
+    public void setPhotoId(Integer contactId) { this.photoId = photoId; }
 
     public Uri getProfilePicture() {
         return this.profilePicture;
@@ -33,5 +32,6 @@ public class Contact {
     public String getContactId() {
         return this.contactId;
     }
+    public Integer getPhotoId() { return this.photoId; }
 
 }
