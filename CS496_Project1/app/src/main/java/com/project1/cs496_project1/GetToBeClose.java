@@ -136,8 +136,6 @@ public class GetToBeClose extends AppCompatActivity {
 
     // setting button's text by names randomly, but must be included correct name
     public void gtbcSettingButton() {
-    //random number 뽑아내기
-        Random random = new Random();
 
         ArrayList<Integer> randomNumberList = randomNumberGet(gtbcScore, gtbcTotalScore);
 
@@ -167,12 +165,6 @@ public class GetToBeClose extends AppCompatActivity {
 
 //        Uri profilePicture = Uri.withAppendedPath(ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, Long.parseLong(contactId)), ContactsContract.Contacts.Photo.CONTENT_DIRECTORY);
 //        gtbcImageView.setImageURI(profilePicture);
-    }
-
-
-    // call number
-    public void callByNumber(String phoneNumber) {
-
     }
 
 
