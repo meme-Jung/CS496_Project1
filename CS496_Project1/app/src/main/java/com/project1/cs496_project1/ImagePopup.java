@@ -38,6 +38,7 @@ public class ImagePopup extends AppCompatActivity{
         Bitmap bm = BitmapFactory.decodeFile(name);
         iv.setPadding(8, 8, 8, 8);
         iv.setRotation(90);
+        iv.setScaleType(ImageView.ScaleType.CENTER_CROP);
         iv.setImageBitmap(bm);
     }
 }

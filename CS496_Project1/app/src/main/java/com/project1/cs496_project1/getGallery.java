@@ -35,6 +35,9 @@ public class getGallery extends AppCompatActivity {
     public GridView mGridView;
     private ImageView resultView;
     public CustomGalleryAdapter mCustomGalleryAdapter;
+    public String basePath2 = null;
+    public GridView mGridView2;
+    public CustomGalleryAdapter mCustomGalleryAdapter2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -42,24 +45,31 @@ public class getGallery extends AppCompatActivity {
         setContentView(R.layout.activity_get_gallery);
         File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(
                 Environment.DIRECTORY_DCIM), "Camera");
-        if (! mediaStorageDir.exists()){
-            if (! mediaStorageDir.mkdirs()){
+        File downloadDir = new File(Environment.getExternalStoragePublicDirectory(
+                Environment.DIRECTORY_DOWNLOADS), "");
+        if (!downloadDir.exists()) {
+            if (!downloadDir.mkdirs()) {
                 Log.d("Camera", "failed to create directory");
             }
         }
-        final String[] mImgList;
+        if (!mediaStorageDir.exists()) {
+            if (!mediaStorageDir.mkdirs()) {
+                Log.d("Camera", "failed to create directory");
+            }
+        }
         basePath = mediaStorageDir.getPath();
-        File dir = new File(basePath);
-        mImgList = dir.list();
-        mGridView = (GridView)findViewById(R.id.gridview); // .xml의 GridView와 연결
-        mCustomGalleryAdapter = new CustomGalleryAdapter(this, basePath); // 앞에서 정의한 Custom Image Adapter와 연결
+        basePath2 = downloadDir.getPath();
+        mGridView = (GridView) findViewById(R.id.gridview); // .xml의 GridView와 연결
+        mCustomGalleryAdapter = new CustomGalleryAdapter(this, basePath, basePath2); // 앞에서 정의한 Custom Image Adapter와 연결
+
+        final String[] mImgList = mCustomGalleryAdapter.mImgList;
         mGridView.setAdapter(mCustomGalleryAdapter); // GridView 출력
 
         final Intent intent = new Intent(this, ImagePopup.class);
         mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                intent.putExtra("name",basePath+ File.separator  + mImgList[position]);
+                intent.putExtra("name", mImgList[position]);
                 startActivity(intent);
             }
         });
