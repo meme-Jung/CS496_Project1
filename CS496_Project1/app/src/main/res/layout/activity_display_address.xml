@@ -13,6 +13,7 @@
         android:layout_marginTop="3dp"
         android:paddingTop="5dp"
         android:hint="Seach by name"
+        android:singleLine="true"
         android:textSize="18dp" />
 
     <ListView

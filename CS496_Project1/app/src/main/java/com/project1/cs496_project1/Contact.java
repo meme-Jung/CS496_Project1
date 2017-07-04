@@ -18,7 +18,7 @@ public class Contact {
         this.phoneNumber = phoneNumber;
     }
     public void setContactId(String contactId) { this.contactId = contactId; }
-    public void setPhotoId(Integer contactId) { this.photoId = photoId; }
+    public void setPhotoId(Integer photoId) { this.photoId = photoId; }
 
     public Uri getProfilePicture() {
         return this.profilePicture;

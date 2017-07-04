@@ -2,9 +2,7 @@ package com.project1.cs496_project1;
 
 import android.content.ContentUris;
 import android.content.Context;
-import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Rect;
 import android.net.Uri;
 import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
@@ -13,29 +11,23 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
 
 
 public class DisplayAddressActivity extends AppCompatActivity {
     private EditText searchBox;
     private String searchKeyword = null;
     private CustomAddressAdapter adapter = new CustomAddressAdapter();
-    private View contentView;
 
 
-
+    // return true if name contains keyword, else return false
     public boolean stringStartsContainsKeyword(String name, String keyword) {
-
         if (name.toLowerCase().contains(keyword.toLowerCase())) {
             return true;
         }
-
-
         return false;
     }
 
@@ -43,7 +35,7 @@ public class DisplayAddressActivity extends AppCompatActivity {
     // combine name and phoneNumber and add the ArrayList
     // finally return the ArrayList<String>
     public void addContacts(String searchKeyword) {
-        Cursor phones = getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, null, null, null);;
+        Cursor phones = getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, null, null, null);
 //        if (searchKeyword == null) {
 //            phones =
 //        } else {
@@ -52,9 +44,9 @@ public class DisplayAddressActivity extends AppCompatActivity {
 //            phones = getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, selection, selectionArgs, null);
 //        }
 
-
         while (phones.moveToNext()) {
             String name = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
+            // if searchKeyword null or name does not contains keyword, pass (not add to the list)
             if (searchKeyword != null && !stringStartsContainsKeyword(name, searchKeyword))
                 continue;
             String phoneNumber = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
@@ -68,13 +60,15 @@ public class DisplayAddressActivity extends AppCompatActivity {
         phones.close();
     }
 
+
+    // display the list by global adapter
     private void displayList() {
         ListView listview = (ListView) findViewById(R.id.listView1);
         listview.setAdapter(adapter);
     }
 
 
-
+    // hide soft keyboard
     private void hideKeyboard() {
         View view = this.getCurrentFocus();
         if (view != null) {
@@ -93,23 +87,20 @@ public class DisplayAddressActivity extends AppCompatActivity {
         setContentView(R.layout.activity_display_address);
 
         searchBox = (EditText) findViewById(R.id.contactSearchBox);
-        ListView listview = (ListView) findViewById(R.id.listView1);
-
-
         searchBox.addTextChangedListener(new TextWatcher() {
-
             public void afterTextChanged(Editable arg0) {
                 // ignore
             }
-
-            public void beforeTextChanged(CharSequence s, int start,
-                                          int count, int after) {
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                 // ignore
             }
-
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            public void onTextChanged(CharSequence s, int start, int before, int count) { // redisplay at all times when type something
                 adapter = new CustomAddressAdapter();
                 searchKeyword = s.toString();
+
+//                if (s == Character(""))
+//                    searchKeyword = null;
+                Log.i("input", String.valueOf(s));
                 Log.i("keyword", searchKeyword);
                 addContacts(searchKeyword);
                 displayList();
